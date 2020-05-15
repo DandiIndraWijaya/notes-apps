@@ -16,7 +16,7 @@
         </div>
     </div>
     <div class="kanan">
-      <FormNotes :propSaveNote="saveNote" />
+      <FormNotes />
     </div>
   </div>
 </template>
@@ -28,9 +28,7 @@ import FormNotes from './components/formNotes.vue'
 export default {
   name: 'App',
   data: function (){
-        return {
-             dataform: {},
-        }
+        return {}
     },
   components: {
   ListNotes,
@@ -38,13 +36,9 @@ export default {
   },
   methods: {
        newNote(){
-            this.dataform = {id: 0, title: '', description: ''}
+            let data = {id: 0, title: '', description: ''};
+            this.$root.$emit('emitNewNote', data);
        },
-     //   deleteNote(id){
-     //        let noteIndex = this.notes.findIndex(note => note.id == id);
-     //        this.notes.splice(noteIndex, 1);
-
-     //   },
        saveNote(title,description){
           let newId = 0;
           console.log(title);
@@ -63,13 +57,6 @@ export default {
        editNote(id){
             this.dataform = this.notes.find(note => note.id === id);
        },
-     //   updateNote(id,title,description){
-     //        let noteIndex = this.notes.findIndex(note => note.id === id);
-
-     //        this.notes[noteIndex].title = title;
-     //        this.notes[noteIndex].description = description;
-            
-     //   }
   }
 }
 </script>

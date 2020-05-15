@@ -30,6 +30,15 @@ export default {
 
             this.$root.$emit('emitForm', dataform);
         },
+        newId(){
+            let newId = 0;
+            if(this.notes.length === 0){
+                    newId = 1;
+            }else{
+                    newId = this.notes[this.notes.length - 1].id + 1;
+            }
+            return newId;
+        }
     },
     mounted(){
         this.$root.$on('emitDeleteNote', data => {
@@ -43,7 +52,14 @@ export default {
             let note = this.notes[noteIndex];
             note.title = data.title;
             note.description = data.description;
-        })
+        });
+        this.$root.$on('emitSaveNote', data => {
+            let newId = this.newId();
+            let newNote = {id: newId,'title' : data.title, 'description' : data.description};
+            this.editNote(newId);
+            this.notes.push(newNote);
+            this.$root.$emit('emitAfterSaveNote', newId);
+        });
     }
   
 }

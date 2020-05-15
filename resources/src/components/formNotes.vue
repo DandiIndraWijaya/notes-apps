@@ -34,7 +34,8 @@ export default{
         submitNote(e){
             e.preventDefault();
             if(this.id === 0){
-                this.propSaveNote(this.title, this.description);
+                let data = {id: this.id, title: this.title, description: this.description}
+                this.$root.$emit('emitSaveNote', data);
             }else{
                 let data = {id: this.id, title: this.title, description: this.description}
                 this.$root.$emit('emitUpdateNote', data);
@@ -54,18 +55,19 @@ export default{
             this.description = '';
         }
     },
-    // watch:{
-    //    propDataForm: function(note){
-    //        this.id = note.id;
-    //        this.title = note.title;
-    //        this.description = note.description;
-    //    } 
-    // },
     mounted(){
         this.$root.$on('emitForm', data => {
             this.id = data.id;
             this.title = data.title;
             this.description = data.description;
+        });
+        this.$root.$on('emitNewNote', data => {
+            this.id = data.id;
+            this.title = data.title;
+            this.description = data.description;
+        });
+        this.$root.$on('emitAfterSaveNote', newId => {
+            this.id = newId;
         })
     }
 }
