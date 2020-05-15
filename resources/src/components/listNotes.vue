@@ -30,6 +30,13 @@ export default {
 
             this.$root.$emit('emitForm', dataform);
         },
+    },
+    mounted(){
+        this.$root.$on('emitDeleteNote', data =>{
+            let noteIndex = this.notes.findIndex(note => note.id == data.id);
+
+            this.notes.splice(noteIndex, 1);
+        })
     }
   
 }

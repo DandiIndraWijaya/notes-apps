@@ -16,7 +16,7 @@
         </div>
     </div>
     <div class="kanan">
-      <FormNotes :propSaveNote="saveNote" :propUpdateNote="updateNote" :propDeleteNote="deleteNote"/>
+      <FormNotes :propSaveNote="saveNote" :propUpdateNote="updateNote"/>
     </div>
   </div>
 </template>
@@ -40,11 +40,11 @@ export default {
        newNote(){
             this.dataform = {id: 0, title: '', description: ''}
        },
-       deleteNote(id){
-            let noteIndex = this.notes.findIndex(note => note.id == id);
-            this.notes.splice(noteIndex, 1);
+     //   deleteNote(id){
+     //        let noteIndex = this.notes.findIndex(note => note.id == id);
+     //        this.notes.splice(noteIndex, 1);
 
-       },
+     //   },
        saveNote(title,description){
           let newId = 0;
           console.log(title);
