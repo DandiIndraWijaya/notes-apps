@@ -12,11 +12,11 @@
               + Note Baru
             </button>
             
-            <ListNotes :propNotes="notes" :propEditNote="editNote"/>
+            <ListNotes />
         </div>
     </div>
     <div class="kanan">
-      <FormNotes :propSaveNote="saveNote" :propUpdateNote="updateNote"/>
+      <FormNotes :propSaveNote="saveNote" />
     </div>
   </div>
 </template>
@@ -29,7 +29,7 @@ export default {
   name: 'App',
   data: function (){
         return {
-          //    dataform: {},
+             dataform: {},
         }
     },
   components: {
@@ -63,13 +63,13 @@ export default {
        editNote(id){
             this.dataform = this.notes.find(note => note.id === id);
        },
-       updateNote(id,title,description){
-            let noteIndex = this.notes.findIndex(note => note.id === id);
+     //   updateNote(id,title,description){
+     //        let noteIndex = this.notes.findIndex(note => note.id === id);
 
-            this.notes[noteIndex].title = title;
-            this.notes[noteIndex].description = description;
+     //        this.notes[noteIndex].title = title;
+     //        this.notes[noteIndex].description = description;
             
-       }
+     //   }
   }
 }
 </script>

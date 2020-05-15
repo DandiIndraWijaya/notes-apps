@@ -22,9 +22,6 @@ export default{
         propSaveNote : {
             type: Function
         },
-        propUpdateNote : {
-            type: Function
-        },
     },
     data: function(){
         return{
@@ -39,7 +36,8 @@ export default{
             if(this.id === 0){
                 this.propSaveNote(this.title, this.description);
             }else{
-                this.propUpdateNote(this.id, this.title, this.description)
+                let data = {id: this.id, title: this.title, description: this.description}
+                this.$root.$emit('emitUpdateNote', data);
             }
         },
         deleteNote(){

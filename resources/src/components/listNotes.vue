@@ -32,10 +32,17 @@ export default {
         },
     },
     mounted(){
-        this.$root.$on('emitDeleteNote', data =>{
+        this.$root.$on('emitDeleteNote', data => {
             let noteIndex = this.notes.findIndex(note => note.id == data.id);
 
             this.notes.splice(noteIndex, 1);
+        });
+        this.$root.$on('emitUpdateNote', data => {
+            let noteIndex = this.notes.findIndex(note => note.id == data.id);
+
+            let note = this.notes[noteIndex];
+            note.title = data.title;
+            note.description = data.description;
         })
     }
   
