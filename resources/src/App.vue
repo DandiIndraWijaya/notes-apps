@@ -16,7 +16,7 @@
         </div>
     </div>
     <div class="kanan">
-      <FormNotes :propSaveNote="saveNote" :propDataForm="dataform" :propUpdateNote="updateNote" :propDeleteNote="deleteNote"/>
+      <FormNotes :propSaveNote="saveNote" :propUpdateNote="updateNote" :propDeleteNote="deleteNote"/>
     </div>
   </div>
 </template>
@@ -29,8 +29,7 @@ export default {
   name: 'App',
   data: function (){
         return {
-             dataform: {},
-            notes: []
+          //    dataform: {},
         }
     },
   components: {
@@ -57,7 +56,7 @@ export default {
 
             let newNote = {id: newId,'title' : title, 'description' : description};
 
-            editNote(newId);
+            this.editNote(newId);
 
             this.notes.push(newNote);
        },
