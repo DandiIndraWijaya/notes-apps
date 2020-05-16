@@ -39,7 +39,7 @@
                                    'title' => $title,
                                    'description' => $description]);
 
-               return json_encode(['status' => true, 'pesan' => 'data berhasil diubah']);
+               return json_encode(['status' => true, 'id' => $id, 'pesan' => 'data berhasil diubah']);
           }
 
           function allNotes(){

@@ -55,9 +55,16 @@ export default{
             })
         },
         submitUpdate(){
-                let data = {id: this.id, title: this.title, description: this.description}
+            let params = new URLSearchParams;
+            params.append('id', this.id);
+            params.append('title', this.title);
+            params.append('description', this.description);
+
+            axios.post('http://localhost/notes-apps/note/update', params).then(response => {
+                let data = {id: response.data.id, title: this.title, description: this.description}
                 this.$root.$emit('emitUpdateNote', data);
-            },
+            })        
+        },
         deleteNote(){
             if(this.id != 0){
             let data = {id: this.id};
@@ -78,7 +85,7 @@ export default{
             this.id = data.id;
             this.title = data.title;
             this.description = data.description;
-            this.mode = 'update';
+            this.mode = data.mode;
         });
         this.$root.$on('emitNewNote', data => {
             this.id = data.id;

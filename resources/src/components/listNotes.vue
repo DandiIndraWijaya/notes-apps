@@ -35,15 +35,12 @@ export default {
         this.getData();
         this.$root.$on('emitDeleteNote', data => {
             let noteIndex = this.notes.findIndex(note => note.id == data.id);
-
             this.notes.splice(noteIndex, 1);
         });
         this.$root.$on('emitUpdateNote', data => {
             let noteIndex = this.notes.findIndex(note => note.id == data.id);
-
-            let note = this.notes[noteIndex];
-            note.title = data.title;
-            note.description = data.description;
+            this.notes[noteIndex].title = data.title;
+            this.notes[noteIndex].description = data.description;
         });
         this.$root.$on('emitSaveNote', data => {
             let newNote = {id: data.id,'title' : data.title, 'description' : data.description};
