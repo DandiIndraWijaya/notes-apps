@@ -39,7 +39,7 @@ export default {
   },
   methods: {
        newNote(){
-            this.dataform = {id: 0, title: '', description: ''}
+            this.dataform = {id: 0, title: '', description: '', mode: 'save'}
        },
        deleteNote(id){
             let noteIndex = this.notes.findIndex(note => note.id == id);
@@ -56,13 +56,13 @@ export default {
                }
 
             let newNote = {id: newId,'title' : title, 'description' : description};
-
-            editNote(newId);
-
             this.notes.push(newNote);
+            
+               this.editNote(newId);
        },
        editNote(id){
             this.dataform = this.notes.find(note => note.id === id);
+           this.dataform.mode = 'update';
        },
        updateNote(id,title,description){
             let noteIndex = this.notes.findIndex(note => note.id === id);
