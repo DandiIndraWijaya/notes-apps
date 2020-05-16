@@ -12,11 +12,11 @@
               + Note Baru
             </button>
             
-            <ListNotes :propNotes="notes" :propEditNote="editNote"/>
+            <ListNotes />
         </div>
     </div>
     <div class="kanan">
-      <FormNotes :propSaveNote="saveNote" :propDataForm="dataform" :propUpdateNote="updateNote" :propDeleteNote="deleteNote"/>
+      <FormNotes/>
     </div>
   </div>
 </template>
@@ -39,38 +39,9 @@ export default {
   },
   methods: {
        newNote(){
-            this.dataform = {id: 0, title: '', description: '', mode: 'save'}
+            let data = {id: 0, title: '', description: ''};
+            this.$root.$emit('emitNewNote', data);
        },
-       deleteNote(id){
-            let noteIndex = this.notes.findIndex(note => note.id == id);
-            this.notes.splice(noteIndex, 1);
-
-       },
-       saveNote(title,description){
-          let newId = 0;
-          console.log(title);
-               if(this.notes.length === 0){
-                    newId = 1;
-               }else{
-                    newId = this.notes[this.notes.length - 1].id + 1;
-               }
-
-            let newNote = {id: newId,'title' : title, 'description' : description};
-            this.notes.push(newNote);
-            
-               this.editNote(newId);
-       },
-       editNote(id){
-            this.dataform = this.notes.find(note => note.id === id);
-           this.dataform.mode = 'update';
-       },
-       updateNote(id,title,description){
-            let noteIndex = this.notes.findIndex(note => note.id === id);
-
-            this.notes[noteIndex].title = title;
-            this.notes[noteIndex].description = description;
-            
-       }
   }
 }
 </script>

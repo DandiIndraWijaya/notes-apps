@@ -43,14 +43,17 @@ export default{
     },
     methods: {
         submitSave(){
-            this.propSaveNote(this.title, this.description);
+            let data = {id: this.id, title: this.title, description: this.description}
+            this.$root.$emit('emitSaveNote', data);
         },
         submitUpdate(){
-            this.propUpdateNote(this.id, this.title, this.description);
-        },
+                let data = {id: this.id, title: this.title, description: this.description}
+                this.$root.$emit('emitUpdateNote', data);
+            },
         deleteNote(){
             if(this.id != 0){
-                 this.propDeleteNote(this.id);
+            let data = {id: this.id};
+            this.$root.$emit('emitDeleteNote', data)
             this.resetInput();
             }
            
@@ -61,13 +64,22 @@ export default{
             this.description = '';
         }
     },
-    watch:{
-       propDataForm: function(note){
-           this.id = note.id;
-           this.title = note.title;
-           this.description = note.description;
-           this.mode = note.mode;
-       } 
+
+    mounted(){
+        this.$root.$on('emitForm', data => {
+            this.id = data.id;
+            this.title = data.title;
+            this.description = data.description;
+            this.mode = 'update';
+        });
+        this.$root.$on('emitNewNote', data => {
+            this.id = data.id;
+            this.title = data.title;
+            this.description = data.description;
+            this.mode = 'save';
+        });
+       
+
     }
 }
 </script>

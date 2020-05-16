@@ -1,8 +1,8 @@
 <template>
     <div class="listNotes">
         <ul>
-            <li v-for="(row, index) in propNotes" :key="index">
-                <button @click="idNote(row.id)" class="btn-note">
+            <li v-for="(row, index) in notes" :key="index">
+                <button @click="editNote(row.id)" class="btn-note">
                     <label>{{ row.title }}</label>
                     <span>{{ row.description }}</span>
                 </button>
@@ -12,20 +12,55 @@
 </template>
 
 <script>
+import axios from 'axios';
+
 export default {
     name: 'listNotes',
-    props: {
-        propNotes : {
-            type: Array
-        },
-        propEditNote : {
-            type: Function
-        },
+    data: function(){
+        return {
+             notes: []
+        }
     },
     methods: {
-        idNote(id){
-            this.propEditNote(id);
+        editNote(id){
+            let dataform = this.notes.find(note => note.id === id);
+            dataform.mode = 'update';
+            this.$root.$emit('emitForm', dataform);
+        },
+        newId(){
+            let newId = 0;
+            if(this.notes.length === 0){
+                    newId = 1;
+            }else{
+                    newId = this.notes[this.notes.length - 1].id + 1;
+            }
+            return newId;
+        },
+        getData(){
+            axios.get('http://localhost/notes-apps/note').then(response => this.notes = response.data);
         }
+    },
+    mounted(){
+        this.getData();
+        this.$root.$on('emitDeleteNote', data => {
+            let noteIndex = this.notes.findIndex(note => note.id == data.id);
+
+            this.notes.splice(noteIndex, 1);
+        });
+        this.$root.$on('emitUpdateNote', data => {
+            let noteIndex = this.notes.findIndex(note => note.id == data.id);
+
+            let note = this.notes[noteIndex];
+            note.title = data.title;
+            note.description = data.description;
+        });
+        this.$root.$on('emitSaveNote', data => {
+            let newId = this.newId();
+            let newNote = {id: newId,'title' : data.title, 'description' : data.description};
+            this.notes.push(newNote);
+            this.editNote(newId);
+            
+        });
     }
   
 }
