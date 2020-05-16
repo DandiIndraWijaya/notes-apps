@@ -60,18 +60,22 @@ export default{
             params.append('title', this.title);
             params.append('description', this.description);
 
-            axios.post('http://localhost/notes-apps/note/update', params).then(response => {
+            axios.post('http://localhost/notes-apps/note/update/', params).then(response => {
                 let data = {id: response.data.id, title: this.title, description: this.description}
                 this.$root.$emit('emitUpdateNote', data);
             })        
         },
         deleteNote(){
             if(this.id != 0){
-            let data = {id: this.id};
-            this.$root.$emit('emitDeleteNote', data)
-            this.resetInput();
-            }
-           
+            let params = new URLSearchParams;
+            params.append('id', this.id);
+
+                axios.post('http://localhost/notes-apps/note/delete/', params).then(response => {
+                    let data = {id: response.data.id}
+                    this.$root.$emit('emitDeleteNote', data);
+                    this.resetInput();
+                })
+            }   
         },
         resetInput(){
             this.id = 0;
