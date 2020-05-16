@@ -27,15 +27,6 @@ export default {
             dataform.mode = 'update';
             this.$root.$emit('emitForm', dataform);
         },
-        newId(){
-            let newId = 0;
-            if(this.notes.length === 0){
-                    newId = 1;
-            }else{
-                    newId = this.notes[this.notes.length - 1].id + 1;
-            }
-            return newId;
-        },
         getData(){
             axios.get('http://localhost/notes-apps/note').then(response => this.notes = response.data);
         }
@@ -55,10 +46,9 @@ export default {
             note.description = data.description;
         });
         this.$root.$on('emitSaveNote', data => {
-            let newId = this.newId();
-            let newNote = {id: newId,'title' : data.title, 'description' : data.description};
-            this.notes.push(newNote);
-            this.editNote(newId);
+            let newNote = {id: data.id,'title' : data.title, 'description' : data.description};
+            this.notes.unshift(newNote);
+            this.editNote(data.id);
             
         });
     }

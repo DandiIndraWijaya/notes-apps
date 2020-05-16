@@ -17,6 +17,8 @@
 </template>
 
 <script>
+import axios from 'axios';
+
 export default{
     name: 'FormNotes',
     props: {
@@ -43,8 +45,14 @@ export default{
     },
     methods: {
         submitSave(){
-            let data = {id: this.id, title: this.title, description: this.description}
-            this.$root.$emit('emitSaveNote', data);
+            let params = new URLSearchParams;
+            params.append('title', this.title);
+            params.append('description', this.description);
+
+            axios.post('http://localhost/notes-apps/note/create/', params).then(response => {
+                let data = {id: response.data.id, title: this.title, description: this.description};
+                this.$root.$emit('emitSaveNote', data);
+            })
         },
         submitUpdate(){
                 let data = {id: this.id, title: this.title, description: this.description}
